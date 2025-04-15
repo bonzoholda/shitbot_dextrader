@@ -64,10 +64,12 @@ def get_status():
 @app.get("/status", response_class=HTMLResponse)
 def show_status(request: Request):
     try:
+        logs()
         stats = bot.get_account_stats()
         return templates.TemplateResponse("status.html", {
             "request": request,
-            "stats": stats
+            "stats": stats,
+            "logs": logs
         })
     except Exception as e:
         return HTMLResponse(content=f"<pre>Error: {e}</pre>", status_code=500)
