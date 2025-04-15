@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bot Account Stats</title>
+    <meta http-equiv="refresh" content="15">
+    <style>
+        body { font-family: Arial; background: #111; color: #fff; padding: 20px; }
+        h2 { color: #0f0; }
+        .item { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2>📊 MY ACCOUNT STATS</h2>
+    <div class="item">Portfolio value: ${{ stats.portfolio_value }}</div>
+    <div class="item">USDT balance: {{ stats.usdt_balance }}</div>
+    <div class="item">WMATIC balance: {{ stats.wmatic_balance }}</div>
+    <div class="item">POL balance (gas): {{ stats.pol_balance }}</div>
+    <div class="item">Current POL/USDT price: {{ stats.current_price }}</div>
+</body>
+</html>
