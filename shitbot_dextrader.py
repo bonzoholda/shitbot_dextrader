@@ -649,12 +649,13 @@ class TradingBot:
         trade_volume = calculate_trade_volume(portfolio_value, 0.16)
 
         pol_balance = web3.eth.get_balance(wallet_address)
+        balance_in_pol = web3.from_wei(pol_balance, 'ether')
 
         return {
             "portfolio_value": round(portfolio_value, 2),
             "usdt_balance": round(usdt_balance, 2),
             "wmatic_balance": round(wmatic_balance, 4),
-            "pol_balance": round(pol_balance, 4),
+            "pol_balance": round(balance_in_pol, 4),
             "current_price": round(current_price, 4)  # or dynamically update
         }
     
