@@ -1,0 +1,27 @@
+{
+  "name": "DEX Trading Bot",
+  "startCommand": "python shitbot_dextrader.py",
+  "plugins": [],
+  "envs": [
+    {
+      "key": "BINANCE_API_KEY",
+      "name": "Binance API Key",
+      "description": "Your Binance API key"
+    },
+    {
+      "key": "BINANCE_API_SECRET",
+      "name": "Binance API Secret",
+      "description": "Your Binance API secret"
+    },
+    {
+      "key": "WALLET_ADDRESS",
+      "name": "Wallet Address",
+      "description": "Your public wallet address (used to receive tokens)"
+    },
+    {
+      "key": "WALLET_PRIVKEY",
+      "name": "Wallet Private Key",
+      "description": "Private key to sign transactions (do NOT share this publicly)"
+    }
+  ]
+}
