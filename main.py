@@ -37,8 +37,8 @@ def start_bot():
 threading.Thread(target=start_bot, daemon=True).start()
 
 # HTML page that auto-refreshes logs
-@app.get("/", response_class=HTMLResponse)
-@app.get("/logs", response_class=HTMLResponse)
+#@app.get("/", response_class=HTMLResponse)
+#@app.get("/logs", response_class=HTMLResponse)
 def logs(request: Request):
     try:
         with open("bot.log", "r") as f:
@@ -51,15 +51,15 @@ def logs(request: Request):
         "logs": "".join(lines)
     })
 
-@app.get("/status")
 def get_status():
     try:
         stats = bot.get_account_stats()
         return JSONResponse(stats)
     except Exception as e:
         return JSONResponse({"error": str(e)})
-
-@app.get("/status-page", response_class=HTMLResponse)
+        
+@app.get("/", response_class=HTMLResponse)
+@app.get("/status", response_class=HTMLResponse)
 def show_status(request: Request):
     try:
         stats = bot.get_account_stats()
