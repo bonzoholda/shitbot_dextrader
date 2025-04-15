@@ -41,7 +41,7 @@ threading.Thread(target=start_bot, daemon=True).start()
 def logs(request: Request):
     try:
         with open("bot.log", "r") as f:
-            lines = f.readlines()[-10:]
+            lines = f.readlines()[-20:]
     except FileNotFoundError:
         lines = ["Log file not found."]
 
