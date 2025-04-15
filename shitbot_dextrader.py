@@ -57,7 +57,7 @@ ADDRESS = os.getenv('WALLET_ADDRESS')
 # ===================
 # Define the RPC URL and Chainlink oracle contract details
 # ===================
-RPC_URL = "https://polygon.meowrpc.com"  # Replace with your RPC endpoint
+RPC_URL = "https://1rpc.io/matic"  # Replace with your RPC endpoint
 CHAINLINK_ORACLE_ADDRESS = "0xAB594600376Ec9fD91F8e885dADF0CE036862dE0"  # Example: MATIC/USD on Polygon
 CHAINLINK_ABI = [
     {
