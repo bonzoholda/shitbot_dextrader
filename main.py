@@ -73,12 +73,14 @@ def show_status(request: Request):
         return HTMLResponse(content="<pre>Bot is not initialized.</pre>", status_code=500)
 
     try:
-        logs = logs(request: Request)
+        with open("bot.log", "r") as f:
+            lines = f.readlines()[-20:]
+
         stats = bot.get_account_stats()
         return templates.TemplateResponse("status.html", {
             "request": request,
             "stats": stats,
-            "logs": logs
+            "logs": "".join(lines)
         })
     except Exception as e:
         return HTMLResponse(content=f"<pre>Error: {e}</pre>", status_code=500)
