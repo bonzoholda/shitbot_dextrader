@@ -13,7 +13,13 @@ from shitbot_dextrader import TradingBot  # Make sure this import works correctl
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-bot = TradingBot()
+try:
+    bot = TradingBot()
+except Exception as e:
+    import logging
+    logging.error(f"Bot failed to initialize: {e}")
+    bot = None
+
 
 # Configure logging to both file and console
 logging.basicConfig(
@@ -63,13 +69,14 @@ def get_status():
 @app.get("/", response_class=HTMLResponse)
 @app.get("/status", response_class=HTMLResponse)
 def show_status(request: Request):
+    if not bot:
+        return HTMLResponse(content="<pre>Bot is not initialized.</pre>", status_code=500)
+
     try:
-        logs(request: Request)
         stats = bot.get_account_stats()
         return templates.TemplateResponse("status.html", {
             "request": request,
-            "stats": stats,
-            "logs": logs
+            "stats": stats
         })
     except Exception as e:
         return HTMLResponse(content=f"<pre>Error: {e}</pre>", status_code=500)
