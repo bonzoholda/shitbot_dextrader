@@ -1,23 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Bot Account Stats</title>
-    <meta http-equiv="refresh" content="20">
-    <style>
-        body { font-family: Arial; background: #111; color: #fff; padding: 20px; }
-        h2 { color: #0f0; }
-        .item { margin-bottom: 10px; }
-    </style>
+    <meta charset="UTF-8">
+    <title>Shitbot DEXTrader Dashboard</title>
+    <script>
+        setInterval(() => location.reload(), 20000); // auto-refresh every 20s
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h2>📊 MY ACCOUNT STATS</h2>
-    <div class="item">Portfolio value: ${{ stats.portfolio_value }}</div>
-    <div class="item">USDT balance: {{ stats.usdt_balance }}</div>
-    <div class="item">WMATIC balance: {{ stats.wmatic_balance }}</div>
-    <div class="item">POL balance (gas): {{ stats.pol_balance }}</div>
-    <div class="item">Current POL/USDT price: {{ stats.current_price }}</div>
-        
-    <h2>Live Bot Logs (auto-refresh every 20s)</h2>
-    <pre>{{ logs }}</pre>
+<body class="bg-zinc-900 text-white font-sans">
+    <div class="max-w-4xl mx-auto py-10 px-6">
+        <h1 class="text-3xl font-bold mb-6 text-green-400 flex items-center gap-2">
+            <span>📊</span> MY ACCOUNT STATS
+        </h1>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-zinc-800 p-4 rounded-xl shadow">
+                <p class="text-gray-400 text-sm">USDT</p>
+                <p class="text-xl font-bold">{{ stats.usdt_balance }}</p>
+            </div>
+            <div class="bg-zinc-800 p-4 rounded-xl shadow">
+                <p class="text-gray-400 text-sm">WMATIC</p>
+                <p class="text-xl font-bold">{{ stats.wmatic_balance }}</p>
+            </div>
+            <div class="bg-zinc-800 p-4 rounded-xl shadow">
+                <p class="text-gray-400 text-sm">POL (gas)</p>
+                <p class="text-xl font-bold">{{ stats.pol_balance }}</p>
+            </div>
+            <div class="bg-zinc-800 p-4 rounded-xl shadow">
+                <p class="text-gray-400 text-sm">Portfolio</p>
+                <p class="text-xl font-bold">${{ stats.portfolio_value }}</p>
+            </div>
+        </div>
+
+        <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
+            <p class="text-gray-400 text-sm">Current POL/USDT price</p>
+            <p class="text-xl font-bold text-lime-300">{{ stats.current_price }}</p>
+        </div>
+
+        <h2 class="text-2xl font-bold mb-4 text-green-300">📜 Live Bot Logs</h2>
+        <div class="bg-black text-green-400 text-sm font-mono p-4 rounded-lg h-[400px] overflow-y-auto whitespace-pre-wrap">
+            {{ logs }}
+        </div>
+    </div>
 </body>
 </html>
