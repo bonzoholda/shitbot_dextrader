@@ -58,3 +58,14 @@ def get_status():
         return JSONResponse(stats)
     except Exception as e:
         return JSONResponse({"error": str(e)})
+
+@app.get("/status-page", response_class=HTMLResponse)
+def show_status(request: Request):
+    try:
+        stats = bot.get_account_stats()
+        return templates.TemplateResponse("status.html", {
+            "request": request,
+            "stats": stats
+        })
+    except Exception as e:
+        return HTMLResponse(content=f"<pre>Error: {e}</pre>", status_code=500)
