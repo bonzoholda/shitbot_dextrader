@@ -8,6 +8,3 @@ cryptography
 fernet
 numpy
 pandas
-time
-requests
-gc
