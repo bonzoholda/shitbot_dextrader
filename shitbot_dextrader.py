@@ -14,6 +14,25 @@ from binance.enums import *
 import requests
 import gc
 
+import logging
+import builtins
+
+logging.basicConfig(
+    filename="bot.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(message)s"
+)
+
+# Redirect print to log
+def log_print(*args, **kwargs):
+    message = " ".join(str(arg) for arg in args)
+    logging.info(message)
+    builtins.__orig_print__(*args, **kwargs)
+
+builtins.__orig_print__ = builtins.print
+builtins.print = log_print
+
+
 session = requests.Session()
 # Use the session
 session.close()  # Release resources
