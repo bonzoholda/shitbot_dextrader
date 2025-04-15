@@ -641,6 +641,23 @@ class TradingBot:
             writer = csv.writer(file)
             writer.writerow([timestamp, action, price, volume, position_type, portfolio_value, wmatic_balance, usdt_balance])
 
+    def get_account_stats(self):
+        current_price = fetch_price()  # Replace with your function to fetch price
+        wmatic_balance = get_token_balance(wmatic_address, wallet_address)
+        usdt_balance = get_token_balance(usdt_address, wallet_address)
+        portfolio_value = calculate_portfolio_balance(wmatic_balance, usdt_balance, current_price)
+        trade_volume = calculate_trade_volume(portfolio_value, 0.16)
+
+        pol_balance = web3.eth.get_balance(wallet_address)
+
+        return {
+            "portfolio_value": round(portfolio_value, 2),
+            "usdt_balance": round(usdt_balance, 2),
+            "wmatic_balance": round(wmatic_balance, 4),
+            "pol_balance": round(pol_balance, 4),
+            "current_price": round(current_price, 4)  # or dynamically update
+        }
+    
     def update_trailing_tp_with_activation(self, position_type, current_price, entry_price, trailing_tp):
         """Update trailing TP only in the favorable direction after activation."""
         if position_type == 'long':
