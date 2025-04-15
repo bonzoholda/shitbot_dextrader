@@ -13,6 +13,8 @@ from shitbot_dextrader import TradingBot  # Make sure this import works correctl
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+bot = TradingBot()
+
 # Configure logging to both file and console
 logging.basicConfig(
     filename="bot.log",
@@ -26,7 +28,7 @@ logging.getLogger().addHandler(console_handler)
 
 # Start your trading bot in a background thread
 def start_bot():
-    bot = TradingBot()
+    
     while True:
         try:
             bot.trading_execution()
