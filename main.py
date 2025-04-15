@@ -5,6 +5,7 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 
 # Import your full bot class and dependencies from the current file
 from shitbot_dextrader import TradingBot  # Make sure this import works correctly
@@ -49,3 +50,11 @@ def logs(request: Request):
         "request": request,
         "logs": "".join(lines)
     })
+
+@app.get("/status")
+def get_status():
+    try:
+        stats = bot.get_account_stats()
+        return JSONResponse(stats)
+    except Exception as e:
+        return JSONResponse({"error": str(e)})
