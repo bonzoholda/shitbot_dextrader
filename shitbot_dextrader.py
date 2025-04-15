@@ -20,6 +20,8 @@ session.close()  # Release resources
 
 #pip install python-binance  ###dependency for bsc price feed, run first
 
+app = FastAPI()
+
 # ===================
 # Load environment variables from .env file
 # ===================
