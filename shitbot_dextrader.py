@@ -6,6 +6,7 @@ from web3 import Web3
 from web3.exceptions import TimeExhausted, TransactionNotFound
 from cryptography.fernet import Fernet
 from web3 import Web3
+from fastapi import FastAPI
 
 #import from binance related
 from binance.client import Client
