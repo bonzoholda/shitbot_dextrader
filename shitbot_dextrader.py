@@ -699,10 +699,10 @@ class TradingBot:
         pol_balance = web3.eth.get_balance(wallet_address)
         balance_in_pol = web3.from_wei(pol_balance, 'ether')
 
-        print(f"-------------------------------------------------------------")
-        print(f" Balances -- USDT: {usdt_balance:.4f} | WMATIC: {wmatic_balance:.4f} | POL: {balance_in_pol:.4f} ")
-        print(f" Current price: {current_price:.4f} | Portfolio: {portfolio_value:.4f} | Lot: {trade_volume:.4f} ")
-        print(f"-------------------------------------------------------------")
+        #print(f"-------------------------------------------------------------")
+        #print(f" Balances -- USDT: {usdt_balance:.4f} | WMATIC: {wmatic_balance:.4f} | POL: {balance_in_pol:.4f} ")
+        #print(f" Current price: {current_price:.4f} | Portfolio: {portfolio_value:.4f} | Lot: {trade_volume:.4f} ")
+        #print(f"-------------------------------------------------------------")
 
         if self.open_position:
             self.manage_open_position(current_price, trade_volume, portfolio_value, wmatic_balance, usdt_balance)
@@ -784,7 +784,7 @@ if __name__ == "__main__":
             
             #historical_data = update_historical_data(historical_data)
             bot.trading_execution()
-            time.sleep(15)  # Wait before next execution
+            time.sleep(30)  # Wait before next execution
         except Exception as e:
             print(f"Error in trading loop: {e}")
 
