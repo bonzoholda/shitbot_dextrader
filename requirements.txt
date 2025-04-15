@@ -7,3 +7,8 @@ python-binance
 cryptography
 fernet
 numpy
+pandas
+os
+time
+requests
+gc
