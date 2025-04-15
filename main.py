@@ -64,7 +64,7 @@ def get_status():
 @app.get("/status", response_class=HTMLResponse)
 def show_status(request: Request):
     try:
-        logs()
+        logs(request: Request)
         stats = bot.get_account_stats()
         return templates.TemplateResponse("status.html", {
             "request": request,
