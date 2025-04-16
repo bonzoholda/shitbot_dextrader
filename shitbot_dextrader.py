@@ -642,6 +642,7 @@ class TradingBot:
             writer.writerow([timestamp, action, price, volume, position_type, portfolio_value, wmatic_balance, usdt_balance])
 
     def get_account_stats(self):
+        acc_address = wallet_address
         current_price = fetch_price()  # Replace with your function to fetch price
         wmatic_balance = get_token_balance(wmatic_address, wallet_address)
         usdt_balance = get_token_balance(usdt_address, wallet_address)
@@ -652,6 +653,7 @@ class TradingBot:
         balance_in_pol = web3.from_wei(pol_balance, 'ether')
 
         return {
+            "account_wallet": acc_address,
             "portfolio_value": round(portfolio_value, 2),
             "usdt_balance": round(usdt_balance, 2),
             "wmatic_balance": round(wmatic_balance, 4),
