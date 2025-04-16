@@ -15,7 +15,7 @@ This DEX trader bot runs 24/7 with following strategy:
 
 Click the button below to deploy the bot to Railway (almost free cloud hosting, you can log in there using google or github account):
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/IYTjWn?referralCode=u300S7)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/2hMjWV?referralCode=u300S7)
 
 ### 🧪 Requirements
 
