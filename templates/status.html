@@ -1,92 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-       
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shitbot DEXTrader Dashboard</title>
-    <script>
-        //setInterval(() => location.reload(), 20000); // auto-refresh every 20s
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shitbot DEXTrader Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-zinc-900 text-white font-sans">
-    <div class="text-center py-6">
-        <img src="/static/images/logo.png" alt="ShitBot DEXtrader Logo" class="mx-auto mb-2" style="max-width: 280px; height: auto;" />
-        <p class="text-sm text-orange-400 italic">Grow your portfolio automatically in decentralized way!</p>
+  <div class="text-center py-6">
+    <img src="/static/images/logo.png" alt="ShitBot DEXtrader Logo" class="mx-auto mb-2" style="max-width: 280px; height: auto;" />
+    <p class="text-sm text-orange-400 italic">Grow your portfolio automatically in decentralized way!</p>
+  </div>
+
+  <div class="max-w-4xl mx-auto py-10 px-6">
+    <h1 class="text-3xl font-bold mb-6 text-green-400 flex items-center gap-2">
+      <span>📊</span> ACCOUNT STATS
+    </h1>
+
+    <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
+      <p class="text-gray-400 text-sm">Wallet Address</p>
+      <p id="account_wallet" class="text-xl text-lime-300">Loading...</p>
     </div>
 
-    <div class="max-w-4xl mx-auto py-10 px-6">
-        <h1 class="text-3xl font-bold mb-6 text-green-400 flex items-center gap-2">
-            <span>📊</span> ACCOUNT STATS
-        </h1>
-
-        <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
-            <p class="text-gray-400 text-sm">Wallet Address</p>
-            <p class="text-xl text-lime-300 overflow-y-auto whitespace-pre-wrap" id="account_wallet">{{ stats.account_wallet }}</p>
-        </div>            
-            
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="bg-zinc-800 p-4 rounded-xl shadow">
-                <p class="text-gray-400 text-sm">Portfolio</p>
-                <p class="text-xl font-bold" id="portfolio">${{ stats.portfolio_value }}</p>
-            </div>
-            <div class="bg-zinc-800 p-4 rounded-xl shadow">
-                <p class="text-gray-400 text-sm">USDT</p>
-                <p class="text-xl font-bold" id="usdt">${{ stats.usdt_balance }}</p>
-            </div>
-            <div class="bg-zinc-800 p-4 rounded-xl shadow">
-                <p class="text-gray-400 text-sm">WMATIC</p>
-                <p class="text-xl font-bold" id="wmatic">{{ stats.wmatic_balance }}</p>
-            </div>
-            <div class="bg-zinc-800 p-4 rounded-xl shadow">
-                <p class="text-gray-400 text-sm">POL (gas)</p>
-                <p class="text-xl font-bold" id="pol">{{ stats.pol_balance }}</p>
-            </div>
-        </div>
-
-        <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
-            <p class="text-gray-400 text-sm">Current POL/USDT price</p>
-            <p class="text-xl font-bold text-lime-300" id="price">${{ stats.current_price }}</p>
-        </div>
-
-
-        <div class="my-6">
-            <h2 class="text-2xl font-bold text-green-300 mb-2">📉 Live Price Chart</h2>
-            <div class="rounded-xl overflow-hidden border border-zinc-700">
-                <iframe id="tv-chart" src="/chart" width="100%" height="420" frameborder="0" style="margin-top: 1rem; border-radius: 12px;"></iframe>
-            </div>
-        </div>
-
-        
-        <h2 class="text-2xl font-bold mb-4 text-green-300">📜 Live Bot Logs</h2>
-        <div class="bg-black text-green-400 text-sm font-mono p-4 rounded-lg h-[400px] overflow-y-auto whitespace-pre-wrap" id="logs">
-            {{ logs }}
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="bg-zinc-800 p-4 rounded-xl shadow">
+        <p class="text-gray-400 text-sm">Portfolio</p>
+        <p id="portfolio" class="text-xl font-bold">$0.00</p>
+      </div>
+      <div class="bg-zinc-800 p-4 rounded-xl shadow">
+        <p class="text-gray-400 text-sm">USDT</p>
+        <p id="usdt" class="text-xl font-bold">$0.00</p>
+      </div>
+      <div class="bg-zinc-800 p-4 rounded-xl shadow">
+        <p class="text-gray-400 text-sm">WMATIC</p>
+        <p id="wmatic" class="text-xl font-bold">0.0000</p>
+      </div>
+      <div class="bg-zinc-800 p-4 rounded-xl shadow">
+        <p class="text-gray-400 text-sm">POL (gas)</p>
+        <p id="pol" class="text-xl font-bold">0.0000</p>
+      </div>
     </div>
 
-       <script>
-         async function loadSignal() {
-           try {
-             const res = await fetch('/api/signal');
-             const data = await res.json();
-       
-             document.getElementById('account_wallet').textContent = stats.account_wallet;
-             document.getElementById('portfolio').textContent = stats.portfolio_value;
-             document.getElementById('usdt').textContent = stats.usdt_balance;
-             document.getElementById('wmatic').textContent = stats.wmatic_balance;
-             document.getElementById('pol').textContent = stats.pol_balance;
-             document.getElementById('price').textContent = stats.current_price;               
-             document.getElementById('logs').textContent = logs;                    
-           } catch (err) {
-             console.error("Failed to load signal:", err);
-           }
-         }
-       
-         loadSignal(); // initial call
-         setInterval(loadSignal, 15000); // update every 15s
-       </script>
-    
+    <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
+      <p class="text-gray-400 text-sm">Current POL/USDT price</p>
+      <p id="price" class="text-xl font-bold text-lime-300">$0.0000</p>
+    </div>
+
+    <div class="my-6">
+      <h2 class="text-2xl font-bold text-green-300 mb-2">📉 Live Price Chart</h2>
+      <div class="rounded-xl overflow-hidden border border-zinc-700">
+        <iframe id="tv-chart" src="/chart" width="100%" height="420" frameborder="0" style="margin-top: 1rem; border-radius: 12px;"></iframe>
+      </div>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-green-300">📜 Live Bot Logs</h2>
+    <div id="logs" class="bg-black text-green-400 text-sm font-mono p-4 rounded-lg h-[400px] overflow-y-auto whitespace-pre-wrap">
+      Loading logs...
+    </div>
+  </div>
+
+  <script>
+    async function loadSignal() {
+      try {
+        const res = await fetch('/api/signal');
+        const stats = await res.json();
+
+        document.getElementById('account_wallet').textContent = {{ stats.account_wallet }} || 'N/A';
+        document.getElementById('portfolio').textContent = "$" + ( {{ stats.portfolio_value }} || 0).toFixed(2);
+        document.getElementById('usdt').textContent = "$" + ( {{ stats.usdt_balance }} || 0).toFixed(2);
+        document.getElementById('wmatic').textContent = ( {{ stats.wmatic_balance }} || 0).toFixed(4);
+        document.getElementById('pol').textContent = ( {{ stats.pol_balance }} || 0).toFixed(4);
+        document.getElementById('price').textContent = "$" + ( {{ stats.current_price }} || 0).toFixed(4);
+        document.getElementById('logs').textContent = {{ logs }} || "No logs found.";
+      } catch (err) {
+        console.error("Failed to load signal:", err);
+        document.getElementById('logs').textContent = "Failed to load signal.";
+      }
+    }
+
+    loadSignal();
+    setInterval(loadSignal, 15000);
+  </script>
 </body>
 </html>
-
