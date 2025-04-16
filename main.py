@@ -91,3 +91,17 @@ def show_status(request: Request):
 @app.get("/chart", response_class=HTMLResponse)
 def serve_chart(request: Request):
     return templates.TemplateResponse("chart.html", {"request": request})
+
+@app.get("/api/signal")
+def get_signal():
+    stats = get_current_stats()  # however you generate this
+    return {
+        "account_wallet": stats["account_wallet"],
+        "portfolio_value": stats["portfolio_value"],
+        "usdt_balance": stats["usdt_balance"],
+        "wmatic_balance": stats["wmatic_balance"],
+        "pol_balance": stats["pol_balance"],
+        "current_price": stats["current_price"],
+        "logs": stats["logs"]
+    }
+
