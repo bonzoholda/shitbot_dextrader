@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shitbot DEXTrader Dashboard</title>
     <script>
         setInterval(() => location.reload(), 20000); // auto-refresh every 20s
@@ -24,7 +25,7 @@
             <p class="text-xl text-lime-300">{{ stats.account_wallet }}</p>
         </div>            
             
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div class="bg-zinc-800 p-4 rounded-xl shadow">
                 <p class="text-gray-400 text-sm">Portfolio</p>
                 <p class="text-xl font-bold">${{ stats.portfolio_value }}</p>
