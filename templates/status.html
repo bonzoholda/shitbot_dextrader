@@ -23,31 +23,31 @@
 
         <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
             <p class="text-gray-400 text-sm">Wallet Address</p>
-            <p class="text-xl text-lime-300 overflow-y-auto whitespace-pre-wrap">{{ stats.account_wallet }}</p>
+            <p class="text-xl text-lime-300 overflow-y-auto whitespace-pre-wrap" id="account_wallet">{{ stats.account_wallet }}</p>
         </div>            
             
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div class="bg-zinc-800 p-4 rounded-xl shadow">
                 <p class="text-gray-400 text-sm">Portfolio</p>
-                <p class="text-xl font-bold">${{ stats.portfolio_value }}</p>
+                <p class="text-xl font-bold" id="portfolio">${{ stats.portfolio_value }}</p>
             </div>
             <div class="bg-zinc-800 p-4 rounded-xl shadow">
                 <p class="text-gray-400 text-sm">USDT</p>
-                <p class="text-xl font-bold">${{ stats.usdt_balance }}</p>
+                <p class="text-xl font-bold" id="usdt">${{ stats.usdt_balance }}</p>
             </div>
             <div class="bg-zinc-800 p-4 rounded-xl shadow">
                 <p class="text-gray-400 text-sm">WMATIC</p>
-                <p class="text-xl font-bold">{{ stats.wmatic_balance }}</p>
+                <p class="text-xl font-bold" id="wmatic">{{ stats.wmatic_balance }}</p>
             </div>
             <div class="bg-zinc-800 p-4 rounded-xl shadow">
                 <p class="text-gray-400 text-sm">POL (gas)</p>
-                <p class="text-xl font-bold">{{ stats.pol_balance }}</p>
+                <p class="text-xl font-bold" id="pol">{{ stats.pol_balance }}</p>
             </div>
         </div>
 
         <div class="bg-zinc-800 p-4 rounded-xl shadow mb-8">
             <p class="text-gray-400 text-sm">Current POL/USDT price</p>
-            <p class="text-xl font-bold text-lime-300">${{ stats.current_price }}</p>
+            <p class="text-xl font-bold text-lime-300" id="price">${{ stats.current_price }}</p>
         </div>
 
 
@@ -60,7 +60,7 @@
 
         
         <h2 class="text-2xl font-bold mb-4 text-green-300">📜 Live Bot Logs</h2>
-        <div class="bg-black text-green-400 text-sm font-mono p-4 rounded-lg h-[400px] overflow-y-auto whitespace-pre-wrap">
+        <div class="bg-black text-green-400 text-sm font-mono p-4 rounded-lg h-[400px] overflow-y-auto whitespace-pre-wrap" id="logs">
             {{ logs }}
         </div>
     </div>
@@ -71,10 +71,13 @@
              const res = await fetch('/api/signal');
              const data = await res.json();
        
-             document.getElementById('pair').textContent = data.pair;
-             document.getElementById('signal').textContent = data.signal.toUpperCase();
-             document.getElementById('price').textContent = `$${data.price?.toFixed(4)}`;
-             document.getElementById('timestamp').textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
+             document.getElementById('account_wallet').textContent = stats.account_wallet;
+             document.getElementById('portfolio').textContent = stats.portfolio_value;
+             document.getElementById('usdt').textContent = stats.usdt_balance;
+             document.getElementById('wmatic').textContent = stats.wmatic_balance;
+             document.getElementById('pol').textContent = stats.pol_balance;
+             document.getElementById('price').textContent = stats.current_price;               
+             document.getElementById('logs').textContent = logs;                    
            } catch (err) {
              console.error("Failed to load signal:", err);
            }
