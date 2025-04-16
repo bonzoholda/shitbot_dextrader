@@ -8,7 +8,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 
 from fastapi.staticfiles import StaticFiles
-
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Import your full bot class and dependencies from the current file
