@@ -510,7 +510,8 @@ class TradingBot:
                 self.open_position = {'type': 'short', 'entry_price': current_price, 'trailing_tp': current_price * self.SL_THRESHOLD}
                 self.log_transaction("sell", current_price, trade_volume, "short", portfolio_value, wmatic_balance, usdt_balance)
                 print(f"📉 Short signal at {signal_price} — SELL was executed")
-     
+         else :
+             print(f"Scanning market data. Current price is {signal_price}, waiting for new signal.")
 
     def reset_position(self):
         self.open_position = None
