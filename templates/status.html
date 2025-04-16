@@ -49,6 +49,16 @@
             <p class="text-xl font-bold text-lime-300">${{ stats.current_price }}</p>
         </div>
 
+
+        <div class="my-6">
+            <h2 class="text-2xl font-bold text-green-300 mb-2">📉 Live Price Chart</h2>
+            <div class="rounded-xl overflow-hidden border border-zinc-700">
+                <iframe src="https://s.tradingview.com/widgetembed/?symbol=BINANCE:POLUSDT&interval=30&theme=dark&style=1&locale=en"
+                    width="100%" height="380" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+            </div>
+        </div>
+
+        
         <h2 class="text-2xl font-bold mb-4 text-green-300">📜 Live Bot Logs</h2>
         <div class="bg-black text-green-400 text-sm font-mono p-4 rounded-lg h-[400px] overflow-y-auto whitespace-pre-wrap">
             {{ logs }}
