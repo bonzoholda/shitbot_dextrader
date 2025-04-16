@@ -368,8 +368,8 @@ import os
 class TradingBot:
     CALLBACK_RATE = 0.01  # 0.4% callback
     CHECK_INTERVAL = 15  # Check every 15 seconds
-    TP_THRESHOLD = 1.05  # +3% gain to activate trailing TP
-    SL_THRESHOLD = 0.95  # -5% loss to activate trailing TP
+    TP_THRESHOLD = 1.03  # +3% gain to activate trailing TP
+    SL_THRESHOLD = 0.97  # -5% loss to activate trailing TP
 
     def __init__(self):
         self.open_position = None
