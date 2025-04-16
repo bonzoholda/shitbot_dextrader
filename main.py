@@ -8,13 +8,13 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import JSONResponse
 
 from fastapi.staticfiles import StaticFiles
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Import your full bot class and dependencies from the current file
 from shitbot_dextrader import TradingBot  # Make sure this import works correctly
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 try:
     bot = TradingBot()
