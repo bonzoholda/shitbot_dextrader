@@ -65,13 +65,13 @@
         const res = await fetch('/api/signal');
         const stats = await res.json();
 
-        document.getElementById('account_wallet').textContent = {{ stats.account_wallet }} || 'N/A';
-        document.getElementById('portfolio').textContent = "$" + ( {{ stats.portfolio_value }} || 0).toFixed(2);
-        document.getElementById('usdt').textContent = "$" + ( {{ stats.usdt_balance }} || 0).toFixed(2);
-        document.getElementById('wmatic').textContent = ( {{ stats.wmatic_balance }} || 0).toFixed(4);
-        document.getElementById('pol').textContent = ( {{ stats.pol_balance }} || 0).toFixed(4);
-        document.getElementById('price').textContent = "$" + ( {{ stats.current_price }} || 0).toFixed(4);
-        document.getElementById('logs').textContent = {{ logs }} || "No logs found.";
+        document.getElementById('account_wallet').textContent = stats.account_wallet || 'N/A';
+        document.getElementById('portfolio').textContent = "$" + (stats.portfolio_value || 0).toFixed(2);
+        document.getElementById('usdt').textContent = "$" + (stats.usdt_balance || 0).toFixed(2);
+        document.getElementById('wmatic').textContent = (stats.wmatic_balance || 0).toFixed(4);
+        document.getElementById('pol').textContent = (stats.pol_balance || 0).toFixed(4);
+        document.getElementById('price').textContent = "$" + (stats.current_price || 0).toFixed(4);
+        document.getElementById('logs').textContent = stats.logs || "No logs found.";
       } catch (err) {
         console.error("Failed to load signal:", err);
         document.getElementById('logs').textContent = "Failed to load signal.";
