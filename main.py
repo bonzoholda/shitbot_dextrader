@@ -87,3 +87,7 @@ def show_status(request: Request):
         })
     except Exception as e:
         return HTMLResponse(content=f"<pre>Error: {e}</pre>", status_code=500)
+
+@app.get("/chart", response_class=HTMLResponse)
+def serve_chart(request: Request):
+    return templates.TemplateResponse("chart.html", {"request": request})
