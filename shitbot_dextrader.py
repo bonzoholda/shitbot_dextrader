@@ -456,11 +456,11 @@ class TradingBot:
         #print(f" Balances -- USDT: {usdt_balance:.4f} | WMATIC: {wmatic_balance:.4f} | POL: {balance_in_pol:.4f} ")
         #print(f" Current price: {current_price:.4f} | Portfolio: {portfolio_value:.4f} | Lot: {trade_volume:.4f} ")
         #print(f"-------------------------------------------------------------")
-        print(f"Scanning market data. Current price is {current_price}. No signal yet. Standing by... 💤")
-        
+                
         if self.open_position:
             self.manage_open_position(current_price, trade_volume, portfolio_value, wmatic_balance, usdt_balance)
         else:
+            print(f"Scanning market data. Current price is {current_price}. No signal yet. Standing by... 💤")
             self.open_new_position(current_price, wmatic_balance, usdt_balance, portfolio_value, trade_volume)
 
         time.sleep(self.CHECK_INTERVAL)
