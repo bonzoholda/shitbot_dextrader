@@ -13,15 +13,13 @@ This DEX trader bot runs 24/7 with following strategy:
 
 ## 🚀 Deploy Your Own Copy
 
-Click the button below to deploy the bot to Railway (free cloud hosting):
+Click the button below to deploy the bot to Railway (almost free cloud hosting, you can log in there using google or github account):
 
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/template/IYTjWn?referralCode=u300S7)
 
 ### 🧪 Requirements
 
-You'll need to provide the following:
-
-- ✅ Binance API Key + Secret (to fetch historical data)
+You'll need to provide the following while start deploying your bot:
 - ✅ Your wallet address + private key (for on-chain trading)
 - ✅ Load your Polygon wallet with at least 20USDT (for initial portfolio, 100USDT is recommended) and 10POL (for gas fee, might be sufficient for up to 1000 transactions).
 
