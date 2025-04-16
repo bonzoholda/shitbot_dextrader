@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-async function loadSignal() {
-  const res = await fetch('/api/signal');
-  const data = await res.json();
-
-  document.getElementById('pair').textContent = data.pair;
-  document.getElementById('signal').textContent = data.signal.toUpperCase();
-  document.getElementById('price').textContent = `$${data.price?.toFixed(4)}`;
-  document.getElementById('timestamp').textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
-}
-
-// Only refresh stats — not iframe
-loadSignal();
-setInterval(loadSignal, 15000);
-
-    
+       
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,3 +66,17 @@ setInterval(loadSignal, 15000);
     </div>
 </body>
 </html>
+
+async function loadSignal() {
+  const res = await fetch('/api/signal');
+  const data = await res.json();
+
+  document.getElementById('pair').textContent = data.pair;
+  document.getElementById('signal').textContent = data.signal.toUpperCase();
+  document.getElementById('price').textContent = `$${data.price?.toFixed(4)}`;
+  document.getElementById('timestamp').textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
+}
+
+// Only refresh stats — not iframe
+loadSignal();
+setInterval(loadSignal, 15000);
