@@ -6,7 +6,7 @@ from web3 import Web3
 from web3.exceptions import TimeExhausted, TransactionNotFound
 from cryptography.fernet import Fernet
 from web3 import Web3
-from fastapi import FastAPI
+#from fastapi import FastAPI
 
 #import from binance related
 from binance.client import Client
@@ -40,7 +40,7 @@ session.close()  # Release resources
 
 #pip install python-binance  ###dependency for bsc price feed, run first
 
-app = FastAPI()
+#app = FastAPI()
 
 # ===================
 # Load environment variables from .env file
@@ -456,7 +456,8 @@ class TradingBot:
         #print(f" Balances -- USDT: {usdt_balance:.4f} | WMATIC: {wmatic_balance:.4f} | POL: {balance_in_pol:.4f} ")
         #print(f" Current price: {current_price:.4f} | Portfolio: {portfolio_value:.4f} | Lot: {trade_volume:.4f} ")
         #print(f"-------------------------------------------------------------")
-
+        print(f"Scanning market data. Current price is {current_price}. No signal yet. Standing by... 💤")
+        
         if self.open_position:
             self.manage_open_position(current_price, trade_volume, portfolio_value, wmatic_balance, usdt_balance)
         else:
@@ -509,9 +510,7 @@ class TradingBot:
             if execute_sell(trade_volume, current_price):
                 self.open_position = {'type': 'short', 'entry_price': current_price, 'trailing_tp': current_price * self.SL_THRESHOLD}
                 self.log_transaction("sell", current_price, trade_volume, "short", portfolio_value, wmatic_balance, usdt_balance)
-                print(f"📉 Short signal at {signal_price} — SELL was executed")
-         else :
-             print(f"Scanning market data. Current price is {signal_price}, waiting for new signal.")
+                print(f"📉 Short signal at {signal_price} — SELL was executed")             
 
     def reset_position(self):
         self.open_position = None
