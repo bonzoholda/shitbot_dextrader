@@ -64,19 +64,26 @@
             {{ logs }}
         </div>
     </div>
+
+       <script>
+         async function loadSignal() {
+           try {
+             const res = await fetch('/api/signal');
+             const data = await res.json();
+       
+             document.getElementById('pair').textContent = data.pair;
+             document.getElementById('signal').textContent = data.signal.toUpperCase();
+             document.getElementById('price').textContent = `$${data.price?.toFixed(4)}`;
+             document.getElementById('timestamp').textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
+           } catch (err) {
+             console.error("Failed to load signal:", err);
+           }
+         }
+       
+         loadSignal(); // initial call
+         setInterval(loadSignal, 15000); // update every 15s
+       </script>
+    
 </body>
 </html>
 
-async function loadSignal() {
-  const res = await fetch('/api/signal');
-  const data = await res.json();
-
-  document.getElementById('pair').textContent = data.pair;
-  document.getElementById('signal').textContent = data.signal.toUpperCase();
-  document.getElementById('price').textContent = `$${data.price?.toFixed(4)}`;
-  document.getElementById('timestamp').textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
-}
-
-// Only refresh stats — not iframe
-loadSignal();
-setInterval(loadSignal, 15000);
