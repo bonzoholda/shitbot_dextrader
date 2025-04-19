@@ -463,7 +463,7 @@ class TradingBot:
             print(f"Scanning market data. Current price is {current_price}. No signal yet. Standing by... 💤")
             self.open_new_position(current_price, wmatic_balance, usdt_balance, portfolio_value, trade_volume)
 
-        time.sleep(self.CHECK_INTERVAL)
+        #===time.sleep(self.CHECK_INTERVAL)
 
     def manage_open_position(self, current_price, trade_volume, portfolio_value, wmatic_balance, usdt_balance):
         position_type = self.open_position['type']
