@@ -43,7 +43,7 @@ def start_bot():
             bot.trading_execution()
         except Exception as e:
             logging.error(f"Error in bot: {e}")
-        time.sleep(20)
+        time.sleep(15)
 
 threading.Thread(target=start_bot, daemon=True).start()
 
