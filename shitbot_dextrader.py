@@ -520,14 +520,14 @@ class TradingBot:
 
 # Main Script
 
-if __name__ == "__main__":
-    bot = TradingBot()
-    while True:
-        try:
-            
-            #historical_data = update_historical_data(historical_data)
-            bot.trading_execution()
-            time.sleep(15)  # Wait before next execution
-        except Exception as e:
-            print(f"Error in trading loop: {e}")
+#if __name__ == "__main__":
+#    bot = TradingBot()
+#    while True:
+#        try:
+#            
+#            #historical_data = update_historical_data(historical_data)
+#            bot.trading_execution()
+#            time.sleep(15)  # Wait before next execution
+#        except Exception as e:
+#            print(f"Error in trading loop: {e}")
 
