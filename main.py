@@ -97,7 +97,7 @@ def get_signal():
     stats = bot.get_account_stats()
 
     with open("bot.log", "r") as f:
-        lines = f.readlines()[-20:]
+        lines = f.readlines()[-2:]
         logs = "".join(lines)
     
     return {
