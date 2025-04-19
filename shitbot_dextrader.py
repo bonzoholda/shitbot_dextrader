@@ -471,9 +471,9 @@ class TradingBot:
         trailing_tp = self.open_position['trailing_tp']
         sl_price = entry_price * (0.95 if position_type == 'long' else 1.05)
 
+        print(f"Position: {position_type}, Entry: {entry_price:.4f}, TP: {trailing_tp:.4f}, SL: {sl_price:.4f}")
         trailing_tp = self.update_trailing_tp_with_activation(position_type, current_price, entry_price, trailing_tp)
-        print(f"Monitoring position: Current Price = {current_price:.4f}, Trailing TP = {trailing_tp:.4f}, SL = {sl_price:.4f}")
-
+        
         if self.trailing_tp_active:
             if (position_type == 'long' and current_price < trailing_tp):
                 print(f"Take profit triggered at {current_price:.4f}. Closing LONG position.")
@@ -527,7 +527,7 @@ if __name__ == "__main__":
             
             #historical_data = update_historical_data(historical_data)
             bot.trading_execution()
-            time.sleep(20)  # Wait before next execution
+            time.sleep(15)  # Wait before next execution
         except Exception as e:
             print(f"Error in trading loop: {e}")
 
