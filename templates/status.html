@@ -60,7 +60,8 @@
           frameborder="0"
           style="border: none; display: block;"
           allowfullscreen
-          referrerpolicy="origin-when-cross-origin"
+          referrerpolicy="no-referrer-when-downgrade"
+          id="trackerFrame"
         ></iframe>
       </div>
     </div>
@@ -80,6 +81,17 @@
   </div>
 
   <script>
+    window.addEventListener("message", (event) => {
+      if (event.data.requestClientUrl) {
+        const iframe = document.getElementById("trackerFrame");
+        iframe.contentWindow.postMessage({
+          clientUrl: window.location.origin
+        }, "*");
+      }
+    });
+  </script>
+  
+  <script>
     async function loadSignal() {
       try {
         const res = await fetch('/api/signal');
@@ -97,7 +109,7 @@
         document.getElementById('logs').textContent = "Failed to load signal.";
       }
     }
-
+   
     loadSignal();
     setInterval(loadSignal, 15000);
   </script>
