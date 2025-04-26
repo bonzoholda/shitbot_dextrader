@@ -60,7 +60,6 @@
           frameborder="0"
           style="border: none; display: block;"
           allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"
           id="trackerFrame"
         ></iframe>
       </div>
@@ -82,15 +81,11 @@
 
 	<script>
 	  const iframe = document.getElementById("trackerFrame");
-	  const walletElement = document.getElementById("account_wallet");
+	  const wallet = document.getElementById("account_wallet").textContent.trim(); // or .value if it's an input
 
-	  window.addEventListener("DOMContentLoaded", () => {
-		const wallet = walletElement?.value || walletElement?.textContent || "";
-
-		if (wallet.trim() !== "") {
-		  iframe.src = `https://shitbotmetricstracker-production.up.railway.app?wallet=${encodeURIComponent(wallet.trim())}`;
-		}
-	  });
+	  if (wallet) {
+		iframe.src = `https://shitbotmetricstracker-production.up.railway.app?wallet=${encodeURIComponent(wallet)}`;
+	  }
 	</script>
 
 
