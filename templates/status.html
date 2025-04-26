@@ -77,16 +77,32 @@
 		const iframe = document.getElementById('trackerFrame');
 		const walletElement = document.getElementById('account_wallet');
 
-		if (iframe && walletElement) {
-		  const wallet = walletElement.textContent.trim(); // or .value
+		function waitForWalletReady() {
+		  if (!walletElement) return;
 
-		  iframe.onload = () => {
-			iframe.contentWindow.postMessage({ wallet }, "*");
-		  };
+		  const wallet = walletElement.textContent.trim();
+
+		  // Check if wallet looks like a real address
+		  if (wallet.startsWith('0x') && wallet.length === 42) {
+			console.log("✅ Wallet ready:", wallet);
+
+			iframe.onload = () => {
+			  iframe.contentWindow.postMessage({ wallet }, "*");
+			};
+
+			// If iframe already loaded, send immediately
+			if (iframe.contentWindow) {
+			  iframe.contentWindow.postMessage({ wallet }, "*");
+			}
+		  } else {
+			console.log("⏳ Wallet not ready yet, retrying...");
+			setTimeout(waitForWalletReady, 500); // retry after 500ms
+		  }
 		}
+
+		waitForWalletReady();
 	  });
 	</script>
-
 
 
   
