@@ -84,23 +84,15 @@
 	  const iframe = document.getElementById("trackerFrame");
 	  const walletElement = document.getElementById("account_wallet");
 
-	  iframe.onload = () => {
-		const wallet = walletElement?.value || walletElement?.textContent || ""; 
-		iframe.contentWindow.postMessage(
-		  { wallet: wallet.trim() },
-		  "https://shitbotmetricstracker-production.up.railway.app"
-		);
-	  };
+	  window.addEventListener("DOMContentLoaded", () => {
+		const wallet = walletElement?.value || walletElement?.textContent || "";
 
-	  window.addEventListener("message", (event) => {
-		if (event.data.requestClientUrl) {
-		  iframe.contentWindow.postMessage(
-			{ clientUrl: window.location.origin },
-			"https://shitbotmetricstracker-production.up.railway.app"
-		  );
+		if (wallet.trim() !== "") {
+		  iframe.src = `https://shitbotmetricstracker-production.up.railway.app?wallet=${encodeURIComponent(wallet.trim())}`;
 		}
 	  });
 	</script>
+
 
   
   <script>
