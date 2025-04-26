@@ -80,25 +80,28 @@
     </div>
   </div>
 
-  <script>
+	<script>
+	  const iframe = document.getElementById("trackerFrame");
+	  const walletElement = document.getElementById("account_wallet");
 
-    const iframe = document.getElementById("trackerFrame");
-    const wallet = document.getElementById("account_wallet");
-    
-    iframe.onload = () => {
-      iframe.contentWindow.postMessage({ wallet }, https://shitbotmetricstracker-production.up.railway.app?wallet=${wallet});
-    };
+	  iframe.onload = () => {
+		const wallet = walletElement?.value || walletElement?.textContent || ""; 
+		iframe.contentWindow.postMessage(
+		  { wallet: wallet.trim() },
+		  "https://shitbotmetricstracker-production.up.railway.app"
+		);
+	  };
 
+	  window.addEventListener("message", (event) => {
+		if (event.data.requestClientUrl) {
+		  iframe.contentWindow.postMessage(
+			{ clientUrl: window.location.origin },
+			"https://shitbotmetricstracker-production.up.railway.app"
+		  );
+		}
+	  });
+	</script>
 
-    window.addEventListener("message", (event) => {
-      if (event.data.requestClientUrl) {
-        const iframe = document.getElementById("trackerFrame");
-        iframe.contentWindow.postMessage({
-          clientUrl: window.location.origin
-        }, "*");
-      }
-    });
-  </script>
   
   <script>
     async function loadSignal() {
