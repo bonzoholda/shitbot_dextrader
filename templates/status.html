@@ -78,14 +78,15 @@
 		const walletElement = document.getElementById('account_wallet');
 
 		if (iframe && walletElement) {
-		  const wallet = walletElement.textContent.trim(); // or .value if it's an input field
+		  const wallet = walletElement.textContent.trim(); // or .value
 
-		  if (wallet) {
-			iframe.src = `https://shitbotmetricstracker-production.up.railway.app?wallet=${encodeURIComponent(wallet)}`;
-		  }
+		  iframe.onload = () => {
+			iframe.contentWindow.postMessage({ wallet }, "*");
+		  };
 		}
 	  });
 	</script>
+
 
 
   
