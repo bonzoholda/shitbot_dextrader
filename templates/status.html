@@ -52,8 +52,9 @@
     </div>
 
     <div style="margin-top: 30px;">
-		 <div>
-		  <iframe id="trackerFrame" src="" width="100%" height="600" style="border:none;"></iframe>
+		<div>
+		  <!-- iframe initially loads WITHOUT any ?wallet=xxx -->
+		  <iframe id="trackerFrame" src="https://shitbotmetricstracker-production.up.railway.app" width="100%" height="420px"></iframe>
 		</div>
     </div>
 
@@ -72,12 +73,18 @@
   </div>
 
 	<script>
-	  const iframe = document.getElementById("trackerFrame");
-	  const wallet = document.getElementById("account_wallet").textContent.trim(); // or .value if it's an input
+	  window.addEventListener('DOMContentLoaded', () => {
+		const iframe = document.getElementById('trackerFrame');
+		const walletElement = document.getElementById('account_wallet');
 
-	  if (wallet) {
-		iframe.src = `https://shitbotmetricstracker-production.up.railway.app?wallet=${encodeURIComponent(wallet.trim())}`;
-	  }
+		if (iframe && walletElement) {
+		  const wallet = walletElement.textContent.trim(); // or .value if it's an input field
+
+		  if (wallet) {
+			iframe.src = `https://shitbotmetricstracker-production.up.railway.app?wallet=${encodeURIComponent(wallet)}`;
+		  }
+		}
+	  });
 	</script>
 
 
