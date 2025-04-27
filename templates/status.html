@@ -53,17 +53,30 @@
         font-size: 0.9em;
     }
 </style>
+<style>
+  .logo {
+    max-width: 240px;
+    width: 100%;
+    height: auto;
+    transition: all 0.3s ease; /* smooth animation */
+  }
+
+  .logo.small {
+    max-width: 120px; /* Shrink to 120px when scrolling */
+  }
+</style>
+
 
 	
 </head>
 <body class="bg-zinc-900">
   <div class="max-w-4xl mx-auto px-6 pt-6">
-    <div class="w-full bg-no-repeat bg-center bg-contain"
-         style="background-image: url('/static/images/logo.png'); aspect-ratio: 1013 / 417;">
-      <div class="pt-[50%]"></div>
-    </div>
-    <p class="text-center text-sm text-orange-400 italic mt-3">
-      Grow your portfolio automatically in decentralized way!
+	<div style="text-align: center; margin-top: 20px;">
+	  <img src="/static/images/logo.png" alt="Logo" class="logo">
+	</div>
+
+    <p class="text-center text-4xl font-bold text-orange-800">
+      DEXtrader
     </p>
   </div>
 
@@ -205,5 +218,17 @@
     loadSignal();
     setInterval(loadSignal, 15000);
   </script>
+
+	<script>
+	  window.addEventListener('scroll', function() {
+	    const logo = document.querySelector('.logo');
+	    if (window.scrollY > 50) { // when user scrolls down 50px
+	      logo.classList.add('small');
+	    } else {
+	      logo.classList.remove('small');
+	    }
+	  });
+	</script>
+	
 </body>
 </html>
