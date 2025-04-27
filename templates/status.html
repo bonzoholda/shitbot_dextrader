@@ -207,7 +207,7 @@
 	
 	  async function registerClient(wallet) {
 		const clientUrl = window.location.href;
-		console.log("Sending URL:", url);  // Debugging log
+		console.log("Sending URL:", clientUrl);  // Debugging log
 		try {
 		  const response = await fetch("https://tracker-worker.up.railway.app/api/register_client", {
 			method: "POST",
@@ -241,10 +241,22 @@
 		}
 	  }
 	
-	  iframe.onload = () => {
-	    console.log("iframe loaded. Checking wallet...");
-	    sendWalletWhenReady();
-	  };
+		iframe.onload = () => {
+		  console.log("iframe loaded. Waiting for wallet...");
+		
+		  const wallet = walletElement?.textContent.trim();
+		  if (wallet && wallet.startsWith("0x") && wallet.length === 42) {
+		    iframe.contentWindow.postMessage({ wallet }, "https://shitbotmetricstracker-production.up.railway.app");
+		    sendWalletWhenReady();
+		  } else {
+		    console.log("Wallet not ready yet. Retrying...");
+		    setTimeout(() => {
+		      iframe.contentWindow.postMessage({ wallet: walletElement?.textContent.trim() }, "https://shitbotmetricstracker-production.up.railway.app");
+		      sendWalletWhenReady();
+		    }, 500);
+		  }
+		};
+
 	
 	  window.addEventListener("message", (event) => {
 	    if (event.data.iframeHeight) {
