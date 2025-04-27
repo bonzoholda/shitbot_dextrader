@@ -134,13 +134,10 @@
       <p id="price" class="text-xl font-bold text-lime-300">$0.0000</p>
     </div>
 
-    <div style="margin-top: 30px;">
-		<div>
-		  <!-- iframe initially loads WITHOUT any ?wallet=xxx -->
-		  <iframe id="trackerFrame" src="https://shitbotmetricstracker-production.up.railway.app" width="100%" height="420px"></iframe>
-		</div>
-    </div>
-
+	<div id="iframeContainer" style="margin-top: 30px;">
+	  <!-- We will dynamically insert iframe after client is ready -->
+	</div>
+	
 
     <h2 class="text-2xl ">📜 Live Bot Logs</h2>
 		        <p class="text-zinc-400"> --- </p>
@@ -160,110 +157,77 @@
 
 	<script>
 	  window.addEventListener('DOMContentLoaded', () => {
-		const iframe = document.getElementById('trackerFrame');
-		const walletElement = document.getElementById('account_wallet');
-
-		function waitForWalletReady() {
-		  if (!walletElement) return;
-
-		  const wallet = walletElement.textContent.trim();
-
-		  // Check if wallet looks like a real address
-		  if (wallet.startsWith('0x') && wallet.length === 42) {
-			console.log("✅ Wallet ready:", wallet);
-
-			iframe.onload = () => {
-			  iframe.contentWindow.postMessage({ wallet }, "*");
-			};
-
-			// If iframe already loaded, send immediately
-			if (iframe.contentWindow) {
-			  iframe.contentWindow.postMessage({ wallet }, "*");
-			}
-		  } else {
-			console.log("⏳ Wallet not ready yet, retrying...");
-			setTimeout(waitForWalletReady, 500); // retry after 500ms
-		  }
-		}
-
-		waitForWalletReady();
-	  });
-	</script>
-
-	<script>
-	  const iframe = document.getElementById("trackerFrame");
-	  const walletElement = document.getElementById("account_wallet");
-
+	  const walletElement = document.getElementById('account_wallet');
+	  const iframeContainer = document.getElementById('iframeContainer');
+	
 	  async function checkClient(wallet) {
-		try {
-		  const response = await fetch(`https://tracker-worker.up.railway.app/api/check_client?wallet=${wallet}`);
-		  const data = await response.json();
-		  return data.exists;  // true or false
-		} catch (error) {
-		  console.error("Check client error:", error);
-		  return false; // safer to retry register if check fails
-		}
+	    try {
+	      const response = await fetch(`https://tracker-worker.up.railway.app/api/check_client?wallet=${wallet}`);
+	      const data = await response.json();
+	      return data.exists;
+	    } catch (error) {
+	      console.error("Check client error:", error);
+	      return false;
+	    }
 	  }
 	
 	  async function registerClient(wallet) {
-		const clientUrl = window.location.href;
-		console.log("Sending URL:", clientUrl);  // Debugging log
-		try {
-		  const response = await fetch("https://tracker-worker.up.railway.app/api/register_client", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ wallet: wallet, url: clientUrl })
-		  });
-		  const data = await response.json();
-		  console.log("Registration Response:", data);
-		} catch (error) {
-		  console.error("Registration Error:", error);
-		}
-	  }
-	
-	  async function sendWalletWhenReady() {
-		const wallet = walletElement?.textContent.trim();
-		if (wallet && wallet.startsWith("0x") && wallet.length === 42) {
-		  // 1. Send wallet to iframe
-		  iframe.contentWindow.postMessage({ wallet }, "https://shitbotmetricstracker-production.up.railway.app");
-
-		  // 2. Check if client already exists
-		  const exists = await checkClient(wallet);
-		  if (!exists) {
-			console.log("Client not found in database. Registering...");
-			await registerClient(wallet);
-		  } else {
-			console.log("Client already registered. Proceeding...");
-		  }
-		} else {
-		  console.log("Wallet not ready yet, retrying...");
-		  setTimeout(sendWalletWhenReady, 300);  // keep checking every 300ms
-		}
-	  }
-	
-		iframe.onload = () => {
-		  console.log("iframe loaded. Waiting for wallet...");
-		
-		  const wallet = walletElement?.textContent.trim();
-		  if (wallet && wallet.startsWith("0x") && wallet.length === 42) {
-		    iframe.contentWindow.postMessage({ wallet }, "https://shitbotmetricstracker-production.up.railway.app");
-		    sendWalletWhenReady();
-		  } else {
-		    console.log("Wallet not ready yet. Retrying...");
-		    setTimeout(() => {
-		      iframe.contentWindow.postMessage({ wallet: walletElement?.textContent.trim() }, "https://shitbotmetricstracker-production.up.railway.app");
-		      sendWalletWhenReady();
-		    }, 500);
-		  }
-		};
-
-	
-	  window.addEventListener("message", (event) => {
-	    if (event.data.iframeHeight) {
-	      console.log("Received iframe height:", event.data.iframeHeight);
-	      iframe.style.height = event.data.iframeHeight + "px";
+	    const clientUrl = window.location.href;
+	    try {
+	      const response = await fetch("https://tracker-worker.up.railway.app/api/register_client", {
+	        method: "POST",
+	        headers: { "Content-Type": "application/json" },
+	        body: JSON.stringify({ wallet: wallet, url: clientUrl })
+	      });
+	      const data = await response.json();
+	      console.log("Registration Response:", data);
+	    } catch (error) {
+	      console.error("Registration Error:", error);
 	    }
-	  });
+	  }
+	
+	  async function waitForWalletAndLoadIframe() {
+	    const wallet = walletElement?.textContent.trim();
+	    if (wallet && wallet.startsWith("0x") && wallet.length === 42) {
+	      console.log("✅ Wallet detected:", wallet);
+	
+	      const exists = await checkClient(wallet);
+	      if (!exists) {
+	        console.log("🚀 Client not found, registering...");
+	        await registerClient(wallet);
+	      } else {
+	        console.log("✅ Client already registered.");
+	      }
+	
+	      // After confirming registration, create the iframe
+	      const iframe = document.createElement('iframe');
+	      iframe.src = "https://shitbotmetricstracker-production.up.railway.app";
+	      iframe.id = "trackerFrame";
+	      iframe.width = "100%";
+	      iframe.height = "420px";
+	      iframe.style.borderRadius = "12px";
+	      iframeContainer.appendChild(iframe);
+	
+	      iframe.onload = () => {
+	        iframe.contentWindow.postMessage({ wallet }, "https://shitbotmetricstracker-production.up.railway.app");
+	      };
+	
+	      window.addEventListener("message", (event) => {
+	        if (event.data.iframeHeight) {
+	          console.log("Received iframe height:", event.data.iframeHeight);
+	          iframe.style.height = event.data.iframeHeight + "px";
+	        }
+	      });
+	
+	    } else {
+	      console.log("⏳ Wallet not ready yet, retrying...");
+	      setTimeout(waitForWalletAndLoadIframe, 500);
+	    }
+	  }
+	
+	  waitForWalletAndLoadIframe();
+	});
+
 	</script>
 	
 
