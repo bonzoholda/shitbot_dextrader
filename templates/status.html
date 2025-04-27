@@ -56,17 +56,23 @@
 <style>
   .logo-container {
     position: fixed;
-    top: 20px; /* Distance from top */
+    top: 20px; /* how far from top */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1000; /* stay above other elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* full width so centering works properly */
+    z-index: 1000;
+    pointer-events: none; /* optional: makes logo non-clickable if you want */
   }
 
   .logo {
     max-width: 240px;
-    width: 100%;
+    width: auto; /* Important: don't stretch logo full width */
     height: auto;
     transition: all 0.3s ease;
+    pointer-events: auto; /* if you want logo to still be clickable */
   }
 
   .logo.small {
@@ -77,15 +83,16 @@
 	
 </head>
 <body class="bg-zinc-900">
-  <div class="max-w-4xl mx-auto px-6 pt-6">
-	<div style="text-align: center; margin-top: 20px;">
-	  <img src="/static/images/logo.png" alt="Logo" class="logo">
-	</div>
+<div class="logo-container">
+  <img src="/static/images/logo.png" alt="Logo" class="logo">
+</div>
 
-    <p class="text-center text-4xl font-bold text-orange-400">
-      DEXtrader
-    </p>
-  </div>
+<div class="max-w-4xl mx-auto px-6 pt-6">
+  <p class="text-center text-4xl font-bold text-orange-400" style="margin-top: 160px;">
+    DEXtrader
+  </p>
+</div>
+
 
   <div class="max-w-4xl mx-auto py-10 px-6">
     <h1 class="text-2xl mb-6 items-center gap-2">
