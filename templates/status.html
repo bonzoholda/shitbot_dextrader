@@ -159,6 +159,12 @@
   </div>
 
 	<script>
+	  var iframe = document.getElementById('trackerFrame');
+	  iframe.onload = function() {
+	    iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+	  };
+	</script>
+	<script>
 	  window.addEventListener('DOMContentLoaded', () => {
 		const iframe = document.getElementById('trackerFrame');
 		const walletElement = document.getElementById('account_wallet');
