@@ -54,18 +54,25 @@
     }
 </style>
 <style>
+  .logo-container {
+    position: fixed;
+    top: 20px; /* Distance from top */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; /* stay above other elements */
+  }
+
   .logo {
     max-width: 240px;
     width: 100%;
     height: auto;
-    transition: all 0.3s ease; /* smooth animation */
+    transition: all 0.3s ease;
   }
 
   .logo.small {
-    max-width: 120px; /* Shrink to 120px when scrolling */
+    max-width: 120px;
   }
 </style>
-
 
 	
 </head>
@@ -75,7 +82,7 @@
 	  <img src="/static/images/logo.png" alt="Logo" class="logo">
 	</div>
 
-    <p class="text-center text-4xl font-bold text-orange-800">
+    <p class="text-center text-4xl font-bold text-orange-400">
       DEXtrader
     </p>
   </div>
