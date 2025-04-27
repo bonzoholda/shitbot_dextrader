@@ -206,7 +206,8 @@
 	  }
 	
 	  async function registerClient(wallet) {
-		const clientUrl = window.location.origin; 
+		const clientUrl = window.location.href;
+		console.log("Sending URL:", url);  // Debugging log
 		try {
 		  const response = await fetch("https://tracker-worker.up.railway.app/api/register_client", {
 			method: "POST",
