@@ -447,7 +447,7 @@ class TradingBot:
         wmatic_balance = get_token_balance(wmatic_address, wallet_address)
         usdt_balance = get_token_balance(usdt_address, wallet_address)
         portfolio_value = calculate_portfolio_balance(wmatic_balance, usdt_balance, current_price)
-        trade_volume = calculate_trade_volume(portfolio_value, 0.16)
+        trade_volume = calculate_trade_volume(portfolio_value, 0.12)
         dca_volume = trade_volume * 1.5
 
         pol_balance = web3.eth.get_balance(wallet_address)
