@@ -448,6 +448,7 @@ class TradingBot:
         usdt_balance = get_token_balance(usdt_address, wallet_address)
         portfolio_value = calculate_portfolio_balance(wmatic_balance, usdt_balance, current_price)
         trade_volume = calculate_trade_volume(portfolio_value, 0.16)
+        dca_volume = trade_volume * 1.5
 
         pol_balance = web3.eth.get_balance(wallet_address)
         balance_in_pol = web3.from_wei(pol_balance, 'ether')
@@ -488,12 +489,12 @@ class TradingBot:
 
         if (position_type == 'long' and current_price <= sl_price):
             print(f"Stop loss triggered at {current_price:.4f}. DCA Long to lower the risk.")
-            execute_buy(trade_volume, current_price)
+            execute_buy(dca_volume, current_price)
             self.log_transaction("buy", current_price, trade_volume, "long", portfolio_value, wmatic_balance, usdt_balance)
             self.reset_position()
         elif (position_type == 'short' and current_price >= sl_price):
             print(f"Stop loss triggered at {current_price:.4f}. DCA Short to lower the risk.")
-            execute_sell(trade_volume, current_price)
+            execute_sell(dca_volume, current_price)
             self.log_transaction("sell", current_price, trade_volume, "short", portfolio_value, wmatic_balance, usdt_balance)
             self.reset_position()
 
