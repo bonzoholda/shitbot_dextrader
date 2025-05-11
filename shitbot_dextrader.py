@@ -398,7 +398,7 @@ class TradingBot:
         wmatic_balance = get_token_balance(wmatic_address, wallet_address)
         usdt_balance = get_token_balance(usdt_address, wallet_address)
         portfolio_value = calculate_portfolio_balance(wmatic_balance, usdt_balance, current_price)
-        trade_volume = calculate_trade_volume(portfolio_value, 0.16)
+        trade_volume = calculate_trade_volume(portfolio_value, 0.12)
 
         pol_balance = web3.eth.get_balance(wallet_address)
         balance_in_pol = web3.from_wei(pol_balance, 'ether')
@@ -471,6 +471,7 @@ class TradingBot:
         entry_price = self.open_position['entry_price']
         trailing_tp = self.open_position['trailing_tp']
         sl_price = entry_price * (0.95 if position_type == 'long' else 1.05)
+        dca_volume = trade_volume * 1.5
 
         print(f"Position: {position_type}, Entry: {entry_price:.4f}, TP: {trailing_tp:.4f}, SL: {sl_price:.4f}")
         trailing_tp = self.update_trailing_tp_with_activation(position_type, current_price, entry_price, trailing_tp)
